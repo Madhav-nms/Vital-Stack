@@ -1,5 +1,3 @@
-# Vital-Signs-Data-Logger
-
 ## Overview 
 
 Embedded system for real time acquisition, display and logging of physiological and motion data using an ESP32. The system integrates multiple sensors and peripherals, scheduled using FreeRTOS. 
