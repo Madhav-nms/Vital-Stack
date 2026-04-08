@@ -1,3 +1,8 @@
+
+# Vital Signs Data Logger
+
+Bare-metal vital signs logger built on ESP32 — custom I2C, SPI, and UART drivers written from scratch without HAL abstraction.
+
 ## Overview 
 
 Embedded system for real time acquisition, display and logging of physiological and motion data using an ESP32. The system integrates multiple sensors and peripherals, scheduled using FreeRTOS. 
