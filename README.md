@@ -1,5 +1,5 @@
 
-# Vital Signs Data Logger
+# Vital Stack
 
 Bare-metal vital signs logger built on ESP32 — custom I2C, SPI, and UART drivers written from scratch without HAL abstraction.
 
