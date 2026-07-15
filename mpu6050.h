@@ -4,7 +4,7 @@
 // Register Map (page 16)
 
 #define MPU6050_WHO_AM_I               0x75
-#define MPU6050_WHO_AM_I_VAL           0x68
+#define MPU6050_WHO_AM_I_VAL           0x00
 #define MPU6050_ADDR                   0x68 
 
 #define MPU6050_PWR_MGMT_1             0x6B
@@ -15,6 +15,9 @@
 #define MPU6050_CONFIG                 0x1A
 
 #define MPU6050_ACCEL_CONFIG           0x1C
+
+#define MPU6050_ACCEL_SENSITIVITY     4096.0f
+#define MPU6050_COUNTS_TO_G(counts)   ((float)(counts) / MPU6050_ACCEL_SENSITIVITY)
 
 #define MPU6050_ACCEL_XOUT_H           0x3B
 #define MPU6050_ACCEL_XOUT_L           0x3C

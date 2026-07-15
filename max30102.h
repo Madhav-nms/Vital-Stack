@@ -17,7 +17,7 @@
 #define REG_LED2_PA         0x0D
 #define REG_PART_ID         0xFF
 
-#define MAX30102_PART_ID    0x15 
+#define MAX30102_PART_ID    0x00 
 
 // ADC is 18 bit
 typedef struct {
