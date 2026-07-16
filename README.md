@@ -1,4 +1,4 @@
-# Vital Stack : Bare-Metal Vital Signs Data Logger
+# Vital Stack
 
 A real time physiological monitoring system built on ESP32, written entirely in C without any HAL abstraction. Every driver — I2C, MAX30102, MPU6050 — was written from scratch by reading the datasheet, understanding every register, and deriving every bit value before writing a single line of code.
 
