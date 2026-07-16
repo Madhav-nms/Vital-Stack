@@ -10,9 +10,9 @@ This isn't a tutorial project. It's a learning system built to answer one questi
 
 - Reads heart rate and SpO2 data from the MAX30102 optical sensor
 - Reads 3-axis acceleration from the MPU6050 IMU
-- Uses the accelerometer to qualify PPG samples in real time — if motion is detected above 1.5g at the moment a PPG sample arrives, the sample is flagged as corrupted
+- Uses the accelerometer to qualify PPG samples in real time if motion is detected above 1.5g at the moment a PPG sample arrives, the sample is flagged as corrupted
 - Runs a FreeRTOS task triggered by a hardware interrupt from the MAX30102, not polling
-- Includes a 1 second watchdog timeout that pings both sensors if no interrupt fires — detecting sensor failure silently in the background
+- Includes a 1 second watchdog timeout that pings both sensors if no interrupt fires detecting sensor failure silently in the background
 
 ---
 
@@ -23,14 +23,6 @@ Every register write has a reason. Every bit field was derived from the datashee
 The goal wasn't to build the most sophisticated health monitor. It was to learn and write firmware from scratch.
 
 ---
-
-## System Architecture
-
-MAX30102 (PPG sensor) ──I2C──┐
-├── ESP32 (FreeRTOS)
-MPU6050 (Accelerometer) ─I2C─┘
-│
-└── GPIO4 (INT pin) ──► ISR ──► Binary Semaphore ──► Sensor Task
 
  **Task flow:**
 1. MAX30102 FIFO fills to threshold (17 samples at 100sps ≈ every 170ms)
@@ -53,11 +45,17 @@ MPU6050 (Accelerometer) ─I2C─┘
 **Wiring:**
 
 ESP32 GPIO21 → SDA (both sensors)
+
 ESP32 GPIO22 → SCL (both sensors)
+
 ESP32 GPIO4  → MAX30102 INT
+
 ESP32 3V3    → VCC (both sensors)
+
 ESP32 GND    → GND (both sensors)
+
 MPU6050 AD0  → GND (sets address to 0x68)
+
 
 ---
 
