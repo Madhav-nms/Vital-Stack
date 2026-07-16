@@ -81,10 +81,10 @@ The first instinct for ISR-to-task signaling was a `volatile uint8_t flag`. A gl
 ## Hardware Photos
 
 ### Sensors
-![Sensors](main/sensor_closeup.png)
+![Sensors](sensor_closeup.png)
 
 ### Full Setup
-![Full Setup](main/full_setup.png)
+![Full Setup](full_setup.png)
 
 ---
 
