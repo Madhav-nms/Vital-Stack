@@ -9,10 +9,10 @@
     - After every 8 bits sent, we release SDA and read the ACK bit 
 */
 
-#define SDA_PIN 21 
-#define SCL_PIN 22
+#define SDA_PIN 18
+#define SCL_PIN 19
 
-#define I2C_delay 5 
+#define I2C_delay 5 a
 
 static inline void sda_high(void) { gpio_set_level(SDA_PIN, 1); }
 static inline void sda_low(void)  { gpio_set_level(SDA_PIN, 0); }
@@ -111,18 +111,34 @@ static uint8_t read_byte(int send_ack)
 
 void i2c_init(void)
 {
+    
     gpio_config_t cfg = {
         .pin_bit_mask = (1ULL << SDA_PIN) | (1ULL << SCL_PIN),
-        .mode         = GPIO_MODE_OUTPUT_OD,   // open-drain 
+        .mode         = GPIO_MODE_INPUT_OUTPUT_OD,   // open-drain 
         .pull_up_en   = GPIO_PULLUP_ENABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type    = GPIO_INTR_DISABLE,
     };
+    // Latch HIGH before enabling the outputs so the lines never glitch low at startup
+    gpio_set_level(SDA_PIN, 1);
+    gpio_set_level(SCL_PIN, 1);
     gpio_config(&cfg);
  
     // Idle state: both lines HIGH 
     sda_high();
     scl_high();
+    delay();
+
+    // Bus recovery: 9 clock pulses free a slave left mid-byte (e.g. after an ESP32 reset),
+    // then a clean STOP puts every device back in idle
+    for (int i = 0; i < 9; i++) {
+        scl_low();  delay();
+        scl_high(); delay();
+    }
+    scl_low();  delay();
+    sda_low();  delay();
+    scl_high(); delay();
+    sda_high(); delay();
 }
  
 int i2c_write_reg(uint8_t addr, uint8_t reg, uint8_t data)

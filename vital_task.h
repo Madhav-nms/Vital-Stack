@@ -1,12 +1,15 @@
-#pragma once 
+#pragma once
 #include <stdbool.h>
 #include "mpu6050.h"
-#include "max30102.h"
-             
-#define MAX30102_INT_PIN       4           // Interrupt pin GPIO of MAX30102 when wired 
-#define MOTION_THRESHOLD_G    1.5f         // acceleration above this (in g's) flags PPG sample as corrupted data due to motion
-extern bool g_motion_detected;               
-extern max30102_sample_t g_ppg_sample;
-extern MPU6050_ACCEL_DATA g_accel_data;
-
-int vital_task_start();
+ 
+// MPU6050-only test mode: the task polls the sensor at a fixed rate (no INT pin needed)
+#define SAMPLE_PERIOD_MS       10          // 100 Hz polling
+#define PRINT_EVERY_N          10          // print 10 lines/s so UART doesn't slow the loop
+ 
+#define MOTION_THRESHOLD_G     0.3f        // |magnitude - 1g| above this = motion
+#define ROTATION_THRESHOLD_DPS 30.0f       // any axis spinning faster than this = motion
+ 
+extern volatile bool g_motion_detected;
+extern MPU6050_DATA g_imu_data;
+ 
+int vital_task_start(void);
